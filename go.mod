@@ -15,6 +15,7 @@ require (
 	code.cloudfoundry.org/go-loggregator v7.4.0+incompatible
 	collectd.org v0.5.0 // indirect
 	github.com/Microsoft/go-winio v0.4.15-0.20190919025122-fc70bd9a86b5
+	github.com/SAP/go-hdb v0.102.7
 	github.com/Sectorbob/mlab-ns2 v0.0.0-20171030222938-d3aa0c295a8a
 	github.com/Showmax/go-fqdn v1.0.0
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d
@@ -79,6 +80,7 @@ require (
 	github.com/signalfx/com_signalfx_metrics_protobuf v0.0.2
 	github.com/signalfx/defaults v1.2.2-0.20180531161417-70562fe60657
 	github.com/signalfx/gateway v1.2.19-0.20191125135538-2c417b7ae0bd
+	github.com/signalfx/golib v2.4.1+incompatible
 	github.com/signalfx/golib/v3 v3.3.16
 	github.com/signalfx/ingest-protocols v0.0.16
 	github.com/signalfx/signalfx-agent/pkg/apm v0.0.0-00010101000000-000000000000
@@ -96,9 +98,11 @@ require (
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20200425165423-262c93980547
+	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9
 	golang.org/x/sys v0.0.0-20201015000850-e3ed0017c211
+	golang.org/x/text v0.3.5 // indirect
 	golang.org/x/tools v0.0.0-20201022035929-9cf592e881e9
 	google.golang.org/grpc v1.29.1
 	gopkg.in/fatih/set.v0 v0.1.0

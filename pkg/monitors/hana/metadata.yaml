@@ -1,0 +1,276 @@
+monitors:
+- monitorType: hana
+  doc: |
+    This monitor pulls metrics from all PostgreSQL databases from a specific
+    Postgres server instance.  It pulls basic information that is applicable
+    to any database.  It gathers these metrics via SQL queries.
+
+    ```yaml
+    monitors:
+     - type: hana
+       connectionString: 'hdb://{{.username}}:{{.password}}@20532d6a-ee3a-4f52-90f7-fecaf854806f.hana.trial-eu10.hanacloud.ondemand.com:443?TLSServerName=20532d6a-ee3a-4f52-90f7-fecaf854806f.hana.trial-eu10.hanacloud.ondemand.com&TLSInsecureSkipVerify=false'
+       params: &psqlParams
+         username: {"#from": "vault:secret/my-database[username]"}
+         password: {"#from": "vault:secret/my-database[password]"}
+
+     # This monitor will monitor additional queries from PostgreSQL using the
+     # provided SQL queries.
+     - type: sql
+       dbDriver: postgres
+       connectionString: 'sslmode=disable user={{.username}} password={{.password}}'
+       # This is a YAML reference to avoid duplicating the above config.
+       params: *psqlParams
+       queries:
+         - query: 'SELECT COUNT(*) as count, country, status FROM customers GROUP BY country, status;'
+           metrics:
+             - metricName: "customers"
+               valueColumn: "count"
+               dimensionColumns: ["country", "status"]
+    ```
+
+  dimensions:
+    hana_host:
+      description: SAP Hana host ID
+    usage_type:
+      description: usage_type
+    service_name:
+      description: service_name
+    db_user:
+      description: db user
+    schema_name:
+      description: schema name
+    app_user:
+      description: app user
+    operation:
+      description: operation
+    component_name:
+      description: component_name
+    connection_status:
+      description: connection_status
+    user_name:
+      description: user_name
+  metrics:
+    # Disk used
+    sap.hana.disk.used_size:
+      description: >
+        Used size of something.
+      default: true
+      type: gauge
+    # Disk total
+    sap.hana.disk.total_size:
+      description: >
+        Total size of something.
+      default: true
+      type: gauge
+    # Service statistics
+    sap.hana.service.cpu.utilization:
+      description: >
+        CPU utilization
+      default: true
+      type: gauge
+    sap.hana.service.file.open:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    # Host resource utilization
+    sap.hana.host.memory.physical.free:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.physical.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.swap.free:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.swap.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.allocation.limit:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.poll.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.poll.total:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.code:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.memory.shared:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.host.file.open:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    # Service memory
+    sap.hana.service.memory.logical:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.physical:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.code:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.stack:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.heap.allocated:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.heap.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.shared.allocated:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.shared.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.pool.limit:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.pool.limit.effective:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.service.memory.pool.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    # Component memory
+    sap.hana.service.component.used:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    # Active statements
+    sap.hana.statement.active.recompile.count:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.active.execution.count:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.active.execution.mean:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.active.execution.min:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.active.execution.max:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.active.execution.sum:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    # Expensive statements
+    sap.hana.statement.expensive.duration:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.expensive.records:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.statement.expensive.errors:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    # Connection
+    sap.hana.connection.count:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.connection.memory.allocated:
+      description: >
+        Open files
+      default: true
+      type: gauge
+    sap.hana.connection.record.fetched:
+      description: >
+        Open files
+      default: true
+      type: counter
+    sap.hana.connection.record.affected:
+      description: >
+        Open files
+      default: true
+      type: counter
+    sap.hana.connection.message.sent.size:
+      description: >
+        Open files
+      default: true
+      type: counter
+    sap.hana.connection.message.sent.count:
+      description: >
+        Open files
+      default: true
+      type: counter
+    sap.hana.connection.message.received.size:
+      description: >
+        Open files
+      default: true
+      type: counter
+    sap.hana.connection.message.received.count:
+      description: >
+        Open files
+      default: true
+      type: counter
